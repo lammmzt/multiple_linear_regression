@@ -222,8 +222,8 @@ var myLineChart = new Chart(ctx, {
     }
 });
 
-var ctx = document.getElementById("penjualan");
-var myLineChart = new Chart(ctx, {
+var ctx2 = document.getElementById("penjualan");
+var myLineChart2 = new Chart(ctx2, {
     type: 'line',
     data: {
         labels: ["Jan", "Feb", "Mar", "Apr", "Mei", "Jun", "Jul", "Agu", "Sep", "Okt", "Nov", "Des", ],
