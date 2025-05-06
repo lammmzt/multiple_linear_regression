@@ -1,5 +1,8 @@
 <?= $this->extend('Template/index'); ?>
 <?= $this->section('konten'); ?>
+<?php 
+ini_set('memory_limit', '256M');
+?>
 <div class="row">
     <div class="col-lg-12 mb-4">
         <div class="card shadow mb-4">

@@ -1,6 +1,8 @@
 <?= $this->extend('Template/index'); ?>
 <?= $this->section('konten'); ?>
+
 <?php 
+ini_set('memory_limit', '256M');
 $bulan = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
 ?>
 <div class="row">
