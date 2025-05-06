@@ -29,7 +29,7 @@ class Database extends Config
         'hostname'     => 'localhost',
         'username'     => 'root',
         'password'     => '',
-        'database'     => 'analisi_barang2',
+        'database'     => 'analisis_barang',
 
         // 'username'     => 'analisis-barang',
         // 'password'     => 'analisis-barang321',

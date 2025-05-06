@@ -31,7 +31,8 @@
                         <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
                             Jumlah Penjualan(Bulan Ini)</div>
                         <div class="h5 mb-0 font-weight-bold text-gray-800">
-                            <?= $penjualan_bulan['total_penjualan'] ?> Barang
+                            <?= ($penjualan_bulan['total_penjualan'] == null) ? 0 : $penjualan_bulan['total_penjualan']; ?>
+                            Barang
                         </div>
                     </div>
                     <div class="col-auto">
