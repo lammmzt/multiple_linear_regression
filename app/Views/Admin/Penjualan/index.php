@@ -35,8 +35,22 @@
                     </button>
                 </div>
                 <?php endif; ?>
+                <!-- <div class="row">
+                    <form action="<?= base_url('Penjualan'); ?>" method="post">
+                        <div class="form-group mx-2">
+                            <label for="nama_barang">Nama Barang</label>
+                            <select name="id_barang" id="filter_id_barang" class="form-control" style="width: 100%;"
+                                required>
+                                <option value="">Pilih</option>
+                                <?php foreach ($Barang as $key => $value) { ?>
+                                <option value="<?= $value['id_barang']; ?>"><?= $value['nama_barang']; ?></option>
+                                <?php } ?>
+                            </select>
+                        </div>
+                    </form>
+                </div> -->
                 <div class="table-responsive">
-                    <table class="table table-bordered dataTable" width="100%" cellspacing="0">
+                    <table class="table table-bordered" width="100%" cellspacing="0" id="table_data_penjualan">
                         <thead class="thead-light">
                             <tr class="text-center">
                                 <th>No</th>
@@ -48,26 +62,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <?php $no = 1;
-                            foreach ($Penjualan as $key => $value) { ?>
-                            <tr>
-                                <td class="text-center" width="50px"><?= $no++; ?></td>
-                                <td><?= date('d-m-Y', strtotime($value['tgl_penjualan'])); ?></td>
-                                <td><?= $value['nama_barang']; ?></td>
-                                <td class="text-center"><?= $value['qty_barang']; ?></td>
-                                <td class="text-left">Rp.
-                                    <?= number_format($value['penjualan_bersih'], 0, ',', '.'); ?></td>
-                                <td class="text-center">
-                                    <a haref="#" class="btn btn-warning btn-sm" data-toggle="modal"
-                                        data-target="#edit<?= $value['id_penjualan']; ?>"> <i class="fas fa-edit"></i>
-                                        Edit</a>
-                                    <a href="<?= base_url('Penjualan/hapus/' . $value['id_penjualan']); ?>"
-                                        class="btn btn-danger btn-sm"
-                                        onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?')"> <i
-                                            class="fas fa-trash"></i> Hapus</a>
-                                </td>
-                            </tr>
-                            <?php } ?>
+
                         </tbody>
                     </table>
                 </div>
@@ -310,9 +305,7 @@
     </div>
 </div>
 <!-- edit -->
-<?php foreach ($Penjualan as $key => $value) { ?>
-<div class="modal fade" id="edit<?= $value['id_penjualan']; ?>" role="dialog" aria-labelledby="editModalLabel"
-    aria-hidden="true">
+<div class="modal fade" id="edit" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <form action="<?= base_url('Penjualan/ubah'); ?>" method="post">
@@ -323,36 +316,35 @@
                     </button>
                 </div>
                 <div class="modal-body p-4">
-                    <input type="hidden" name="id_penjualan" value="<?= $value['id_penjualan']; ?>">
+                    <input type="hidden" name="id_penjualan" value="">
                     <div class="form-group mt-2">
                         <label for="tgl_penjualan">Tgl Penjualan <span class="text-danger">*</span></label>
-                        <input type="date" name="tgl_penjualan" id="tgl_penjualan" class="form-control"
-                            value="<?= $value['tgl_penjualan']; ?>" required>
+                        <input type="date" name="tgl_penjualan" id="tgl_penjualan" class="form-control" value=""
+                            required>
 
                     </div>
 
                     <div class="form-group mt-2">
                         <label for="id_barang">Nama Barang <span class="text-danger">*</span></label>
-                        <select name="id_barang" id="edit_id_barang" class="form-control select2_nama_barang"
-                            style="width: 100%;" required>
+                        <select name="id_barang" id="edit_id_barang" class="form-control"
+                            style="width: 100%; z-index: 999;" required>
                             <option value="">Pilih</option>
-                            <?php foreach ($Barang as $key => $val) { ?>
-                            <option value="<?= $val['id_barang']; ?>" <?= ($val['id_barang'] == $value['id_barang']) ?
-                                'selected' : ''; ?>><?= $val['nama_barang']; ?></option>
+                            <?php foreach ($Barang as $key => $value) { ?>
+                            <option value="<?= $value['id_barang']; ?>"><?= $value['nama_barang']; ?></option>
                             <?php } ?>
                         </select>
                     </div>
 
                     <div class="form-group mt-2">
                         <label for="qty_barang">Qty Barang <span class="text-danger">*</span></label>
-                        <input type="number" name="qty_barang" id="qty_barang" class="form-control"
-                            value="<?= $value['qty_barang']; ?>" required placeholder="Masukkan Qty Barang">
+                        <input type="number" name="qty_barang" id="qty_barang" class="form-control" value="" required
+                            placeholder="Masukkan Qty Barang">
                     </div>
 
                     <div class="form-group mt-2">
                         <label for="penjualan_bersih">Penjualan Bersih <span class="text-danger">*</span></label>
-                        <input type="number" name="penjualan_bersih" id="penjualan_bersih" class="form-control"
-                            value="<?= $value['penjualan_bersih']; ?>" required placeholder="Masukkan Penjualan Bersih">
+                        <input type="number" name="penjualan_bersih" id="penjualan_bersih" class="form-control" value=""
+                            required placeholder="Masukkan Penjualan Bersih">
                     </div>
                 </div>
 
@@ -365,11 +357,76 @@
         </div>
     </div>
 </div>
-<?php } ?>
 <?= $this->endSection('kontent'); ?>
 <?= $this->section('script'); ?>
 <script type="text/javascript">
 $(document).ready(function() {
+    function dataTablesPenjualan() {
+        $('#table_data_penjualan').DataTable({
+            processing: true,
+            serverSide: true,
+            scrollCollapse: true,
+            autoWidth: false,
+            responsive: true,
+            paging: true,
+            searching: true,
+            ajax: {
+                url: '<?= base_url('Penjualan/ajaxDataTables') ?>',
+                type: 'GET',
+            },
+            "lengthMenu": [
+                [5, 10, 25, 50, -1],
+                [5, 10, 25, 50, "All"]
+            ],
+
+            columns: [{
+                    data: null,
+                    sortable: false,
+                    searchable: false,
+                    className: 'text-center',
+                    // title: 'No',
+                    render: function(data, type, row, meta) {
+                        return meta.row + meta.settings._iDisplayStart + 1;
+                    }
+                },
+                {
+                    data: 'tgl_penjualan',
+                    name: 'tgl_penjualan',
+                    className: 'text-center'
+                },
+                {
+                    data: 'nama_barang',
+                    name: 'nama_barang',
+                },
+                {
+                    data: 'qty_barang',
+                    name: 'qty_barang',
+                    className: 'text-center'
+                },
+                {
+                    data: 'penjualan_bersih',
+                    name: 'penjualan_bersih',
+                    render: $.fn.dataTable.render.number('.', ',', 0, 'Rp '),
+                    className: 'text-right'
+                },
+                {
+                    data: 'action',
+                    orderable: false,
+                    searchable: false,
+                    className: 'text-center'
+                }
+            ],
+            order: [
+                [1, 'desc']
+            ],
+        });
+    }
+
+    dataTablesPenjualan();
+    // filter select2
+    $('#filter_id_barang').select2({
+        allowClear: true
+    });
     // import
     $('#form-import').submit(function(e) {
         e.preventDefault();
@@ -389,7 +446,8 @@ $(document).ready(function() {
             success: function(response) {
                 // hide modal import
                 $('#import').modal('hide');
-
+                // reload datatables
+                $('#table_data_penjualan').DataTable().ajax.reload();
                 if (response.error) {
                     alert(response.data);
                 } else {
@@ -434,10 +492,49 @@ $(document).ready(function() {
         });
     });
 
-    // close modal hasil import
-    $('#hasil-import').on('hidden.bs.modal', function() {
-        location.reload();
+
+    // edit data
+    $('#table_data_penjualan').on('click', '.btn_edit', function() {
+        // alert('edit');
+        $.ajax({
+            url: '<?= base_url('Penjualan/edit'); ?>',
+            type: 'POST',
+            dataType: 'json',
+            data: {
+                id_penjualan: $(this).attr('data-id')
+            },
+            success: function(response) {
+                if (response.error) {
+                    alert(response.data);
+                } else {
+                    $('#edit').modal('show');
+                    $('#edit input[name="id_penjualan"]').val(response.data.id_penjualan);
+                    $('#edit input[name="tgl_penjualan"]').val(response.data.tgl_penjualan);
+                    $('#edit input[name="qty_barang"]').val(response.data.qty_barang);
+                    $('#edit input[name="penjualan_bersih"]').val(response.data
+                        .penjualan_bersih);
+                    $('#edit select[name="id_barang"]').val(response.data.id_barang)
+                        .trigger(
+                            'change');
+                    $('#edit select[name="id_barang"]').select2({
+                        placeholder: 'Pilih',
+                        allowClear: true
+                    });
+
+
+                }
+            },
+            error: function() {
+                alert('Error');
+            }
+        });
+
     });
+
+    // close modal hasil import
+    // $('#hasil-import').on('hidden.bs.modal', function() {
+    //     location.reload();
+    // });
 });
 
 // select2 when open edit modal click

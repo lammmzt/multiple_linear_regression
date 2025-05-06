@@ -4,7 +4,7 @@ namespace App\Controllers;
 use CodeIgniter\Controller;
 use App\Models\barangModel;
 use CodeIgniter\HTTP\ResponseInterface;
-
+use Hermawan\DataTables\DataTable;
 class Barang extends BaseController
 {
     public function index(): string // tampikan data Barang
@@ -17,6 +17,23 @@ class Barang extends BaseController
         return view('Admin/Barang/index', $data); // mengirim data ke view
     }
 
+    public function ajaxDataTables()
+    {
+        $model = new barangModel(); // panggil model barangModel
+       
+        $builder = $model->ajaxDataPenjualan();
+        // dd($builder->findAll());
+        return DataTable::of($builder)
+            
+            ->add('action', function ($row) {
+                return '
+                    <a href="#" class="btn btn-warning btn-sm btn_edit" data-toggle="modal" data-id="' . $row->id_barang . '"> <i class="fas fa-edit"></i> Edit</a>
+                    <a href="' . base_url('Penjualan/hapus/' . $row->id_barang) . '" class="btn btn-danger btn-sm" onclick="return confirm(\'Apakah Anda yakin ingin menghapus data ini?\')"> <i class="fas fa-trash"></i> Hapus</a>
+                ';
+            }, 'last')
+            ->toJson(true);
+    }
+    
     public function simpan() // simpan data users
     { 
         $model = new barangModel(); // panggil model barang

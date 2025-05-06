@@ -4,15 +4,14 @@ namespace App\Controllers;
 use CodeIgniter\Controller;
 use App\Models\penjualanModel;
 use App\Models\barangModel;
+use Hermawan\DataTables\DataTable;
 use CodeIgniter\HTTP\ResponseInterface;
-
 class Penjualan extends BaseController
 {
     public function index(): string // tampikan data Penjualan
     {
         $model = new penjualanModel(); // panggil model Penjualan
         $modelBarang = new barangModel(); // panggil model barang
-        $data['Penjualan'] = $model->getpenjualan(); // get data Penjualan
         // dd($data);
         $data['Barang'] = $modelBarang->findAll(); // get all data barang
         $data['title'] = 'Penjualan'; // set judul
@@ -20,6 +19,24 @@ class Penjualan extends BaseController
         return view('Admin/Penjualan/index', $data); // mengirim data ke view
     }
 
+    public function ajaxDataTables()
+    {
+        $model = new penjualanModel(); // panggil model Penjualan
+        // $status_pengecekan = $this->request->getPost('status_pengecekan');
+       
+        $builder = $model->ajaxDataPenjualan();
+        // dd($builder->findAll());
+        return DataTable::of($builder)
+            
+            ->add('action', function ($row) {
+                return '
+                    <a href="#" class="btn btn-warning btn-sm btn_edit" data-toggle="modal" data-id="' . $row->id_penjualan . '"> <i class="fas fa-edit"></i> Edit</a>
+                    <a href="' . base_url('Penjualan/hapus/' . $row->id_penjualan) . '" class="btn btn-danger btn-sm" onclick="return confirm(\'Apakah Anda yakin ingin menghapus data ini?\')"> <i class="fas fa-trash"></i> Hapus</a>
+                ';
+            }, 'last')
+            ->toJson(true);
+    }
+    
     public function simpan() // simpan data users
     { 
         $model = new penjualanModel(); // panggil model Penjualan
@@ -35,6 +52,19 @@ class Penjualan extends BaseController
         return redirect()->to('/Penjualan'); // redirect ke halaman Penjualan
     }
 
+    public function edit() // edit data Penjualan
+    {
+        $model = new penjualanModel(); // panggil model Penjualan
+        $id_penjualan = $this->request->getPost('id_penjualan'); // ambil id Penjualan
+        $data = $model->find($id_penjualan); // ambil data Penjualan
+        
+        return $this->response->setJSON([ // set response json
+            'error' => false,
+            'data' => $data,
+            'status' => '200'
+        ]);
+    }
+    
     public function ubah() // ubah data Penjualan
     {
         $model = new penjualanModel(); // panggil model Penjualan
@@ -113,7 +143,9 @@ class Penjualan extends BaseController
 
             $tgl_penjualan = $col[1];
             $nama_barang = $col[2];
-            $penjualan_bersih = $col[3];
+            $penjualan_bersih = str_replace(',', '', $col[3]);
+            $penjualan_bersih = str_replace('Rp', '', $penjualan_bersih);
+            $penjualan_bersih = str_replace('.', '', $penjualan_bersih);
             $qty_barang = $col[4];
 
             if (empty($nama_barang) || empty($tgl_penjualan) || empty($qty_barang) || empty($penjualan_bersih)) {

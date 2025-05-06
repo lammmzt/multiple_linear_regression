@@ -20,6 +20,7 @@ return array(
     'Michalsn\\Uuid\\' => array($vendorDir . '/michalsn/codeigniter4-uuid/src'),
     'Matrix\\' => array($vendorDir . '/markbaker/matrix/classes/src'),
     'Laminas\\Escaper\\' => array($vendorDir . '/laminas/laminas-escaper/src'),
+    'Hermawan\\DataTables\\' => array($vendorDir . '/hermawan/codeigniter4-datatables/src'),
     'Faker\\' => array($vendorDir . '/fakerphp/faker/src/Faker'),
     'DeepCopy\\' => array($vendorDir . '/myclabs/deep-copy/src/DeepCopy'),
     'Config\\' => array($baseDir . '/app/Config'),

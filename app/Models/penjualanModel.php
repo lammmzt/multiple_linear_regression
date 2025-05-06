@@ -10,6 +10,13 @@ class penjualanModel extends Model
     protected $allowedFields = ['id_barang','qty_barang', 'penjualan_bersih', 'tgl_penjualan', 'created_at', 'updated_at']; // set field yang diizinkan
     protected $useTimestamps = true; // set timestamps
 
+    public function ajaxDataPenjualan($id_barang = false) // ambil data penjualan
+    {
+        return $this
+            ->select('penjualan.id_penjualan, penjualan.qty_barang, penjualan.penjualan_bersih, penjualan.tgl_penjualan, barang.nama_barang') // select data penjualan dan nama barang
+            ->join('barang', 'barang.id_barang = penjualan.id_barang');
+           
+    }
     public function getpenjualan($id = false) // ambil data penjualan
     {
         if($id == false){ // jika id kosong
