@@ -113,10 +113,16 @@
                         <div class="chart-area">
                             <canvas id="penjualan"></canvas>
                         </div>
+                        <div class="mt-3">
+                            <p class="text-center">Grafik Penjulan</p>
+                        </div>
                     </div>
                     <div class="col-xl-6 col-lg-6">
                         <div class="chart-area">
                             <canvas id="pendapatan"></canvas>
+                        </div>
+                        <div class="mt-3">
+                            <p class="text-center">Grafik Pendapatan</p>
                         </div>
                     </div>
                 </div>
