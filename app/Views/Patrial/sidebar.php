@@ -2,12 +2,12 @@
 
     <!-- Sidebar - Brand -->
     <a class="sidebar-brand d-flex align-items-center justify-content-center" href="<?= base_url('/'); ?>">
-        <div class="sidebar-brand-icon">
+        <!-- <div class="sidebar-brand-icon">
             <img src="<?= base_url('Assets/logo.png'); ?>" width="50" height="50" alt=""
                 class="img-fluid bg-white rounded-circle">
-        </div>
+        </div> -->
         <div class="sidebar-brand-text mx-2" max-width="50%">
-            Analisis Barang
+            CV Semoga Jaya Abadi
         </div>
     </a>
 

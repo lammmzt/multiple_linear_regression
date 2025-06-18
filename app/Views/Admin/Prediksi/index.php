@@ -63,10 +63,10 @@ $bulan = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agust
                         </div>
 
                         <div class="col-md-3 mb-2">
-                            <label for="penjualan_bersih" class="form-label">Penjualan Bersih</label>
+                            <label for="penjualan_bersih" class="form-label">Harga Jual</label>
                             <input type="text" name="penjualan_bersih" id="penjualan_bersih" class="form-control"
                                 value="<?= ($penjualan_bersih != null) ? number_format($penjualan_bersih, 0, ',', '.') :'' ?>"
-                                required placeholder="Penjualan Bersih" min="0">
+                                required placeholder="Harga Jual" min="0">
                         </div>
 
                         <div class="col-md-3 d-flex align-items-end mb-2">
@@ -84,7 +84,7 @@ $bulan = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agust
                 <div class="alert alert-success mt-4 text-center">Hasil prediksi untuk bulan
                     <strong><?php $periode_bulan = explode('-', $periode);echo $bulan[$periode_bulan[1] - 1] ?></strong>
                     Tahun <strong> <?= $periode_bulan[0] ?></strong>
-                    dengan harga
+                    dengan harga jual
                     <strong>Rp. <?= number_format($penjualan_bersih, 0, ',', '.') ?></strong> adalah
                     <!-- <strong><?=$hasilPrediksi ?> Unit</strong> -->
                     <strong><?= round($hasilPrediksi, 0) ?> Unit</strong>
@@ -99,7 +99,7 @@ $bulan = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agust
                                     class="btn btn-link text-decoration-none text-dark font-weight-bold w-100 text-align-center"
                                     type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true"
                                     aria-controls="collapseOne">
-                                    Detail Proses Prediksi
+                                    Detail Prediksi
                                 </button>
                             </h2>
                         </div>
@@ -107,118 +107,8 @@ $bulan = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agust
                         <div id="collapseOne" class="collapse" aria-labelledby="headingOne"
                             data-parent="#accordionExample">
                             <div class="card-body">
-                                <h5 class="my-2 font-weight-bold float-left">Data Penjualan</h5>
-                                <div class="table-responsive mt-4">
-                                    <table class="table table-bordered table-hover table-striped" id="dataTable"
-                                        width="100%" cellspacing="0">
-                                        <thead>
-                                            <tr>
-                                                <th class="text-center " width="50">No</th>
-                                                <th class="text-center" width="150">Bulan (x1)</th>
-                                                <th class="text-center">Penjualan Bersih (x2)</th>
-                                                <th class="text-center" width="100">Jumlah Terjual (y)</th>
-                                                <th class="text-center">X1^2</th>
-                                                <th class="text-center">X2^2</th>
-                                                <th class="text-center">Y^2</th>
-                                                <th class="text-center">X1Y</th>
-                                                <th class="text-center">X2Y</th>
-                                                <th class="text-center">X1X2</th>
 
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <?php $no = 1; 
-                                                foreach ($data_set as $data): 
-                                            ?>
-                                            <tr>
-                                                <td class="text-center"><?= $no++ ?></td>
-                                                <td class="text-center"><?= $bulan[$data['bulan'] - 1] ?></td>
-                                                <td>Rp. <?= number_format($data['net_sales'], 0, ',', '.') ?></td>
-                                                <td class="text-center"><?= $data['jumlah_terjual'] ?></td>
-                                                <td class="text-center"><?= $data['X1X1'] ?></td>
-                                                <td class="text-center"><?= $data['X2X2'] ?></td>
-                                                <td class="text-center"><?= $data['YY'] ?></td>
-                                                <td class="text-center"><?= $data['X1Y'] ?></td>
-                                                <td class="text-center"><?= $data['X2Y'] ?></td>
-                                                <td class="text-center"><?= $data['X1X2'] ?></td>
-                                            </tr>
-                                            <?php endforeach; ?>
-                                        </tbody>
-                                        <tfoot>
-                                            <tr>
-                                                <th class="text-center" colspan="2">
-                                                    <!-- gambar sigma -->
-                                                    Σ (Jumlah) : <?= count($data_set) ?>
-                                                </th>
-                                                <th class="text-center">Rp. <?= number_format($jumlahX2, 0, ',', '.') ?>
-                                                </th>
-                                                <th class="text-center"><?= $jumlahY ?></th>
-                                                <th class="text-center"><?= $jumlahX1X1 ?></th>
-                                                <th class="text-center"><?= $jumlahX2X2 ?></th>
-                                                <th class="text-center"><?= $jumlahYY ?></th>
-                                                <th class="text-center"><?= $jumlahX1Y ?></th>
-                                                <th class="text-center"><?= $jumlahX2Y ?></th>
-                                                <th class="text-center"><?= $jumlahX1X2 ?></th>
-
-                                            </tr>
-                                    </table>
-                                </div>
-                                <hr>
-                                <!-- data prediksi -->
-                                <h5 class="my-2 font-weight-bold float-left">Data Prediksi</h5>
-                                <div class="table-responsive mt-4">
-                                    <table class="table table-bordered table-hover table-striped" id="dataTable"
-                                        width="100%" cellspacing="0">
-                                        <thead>
-                                            <tr>
-                                                <th class="text-center">Σx1^2</th>
-                                                <th class="text-center">Σx2^2</th>
-                                                <th class="text-center">Σy^2</th>
-                                                <th class="text-center">Σx1y</th>
-                                                <th class="text-center">Σx2y</th>
-                                                <th class="text-center">Σx1x2</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td class="text-center"><?= $sigx1x1 ?></td>
-                                                <td class="text-center"><?= $sigx2x2 ?></td>
-                                                <td class="text-center"><?= $sigyy ?></td>
-                                                <td class="text-center"><?= $sigx1y ?></td>
-                                                <td class="text-center"><?= $sigx2y ?></td>
-                                                <td class="text-center"><?= $sigx1x2 ?></td>
-                                            </tr>
-                                        </tbody>
-                                        <tfoot>
-                                            <tr>
-                                                <!-- b1 -->
-                                                <th class="text-center" colspan="2">b1 = (Σx1y * Σx2^2 - Σx2y * Σx1x2) /
-                                                    (Σx1^2 * Σx2^2
-                                                    -
-                                                    Σx1x2^2)</th>
-                                                <th class="text-center" colspan="4"><?= $b1 ?></th>
-                                            </tr>
-                                            <tr>
-                                                <!-- b2 -->
-                                                <th class="text-center" colspan="2">b2 = (Σx2y * Σx1^2 - Σx1y * Σx1x2) /
-                                                    (Σx1^2 * Σx2^2
-                                                    -
-                                                    Σx1x2^2)</th>
-                                                <th class="text-center" colspan="4"><?= $b2 ?></th>
-                                            </tr>
-                                            <tr>
-                                                <!-- a -->
-                                                <th class="text-center" colspan="2">a = (Σy / n) - b1 * (Σx1 / n) - b2 *
-                                                    (Σx2 / n)</th>
-                                                <th class="text-center" colspan="4"><?= $a ?></th>
-                                            </tr>
-                                        </tfoot>
-
-                                    </table>
-                                </div>
-
-                                <hr>
-                                <h5 class="my-2 font-weight-bold float-left">Hasil Pengujian</h5>
+                                <!-- <h5 class="my-2 font-weight-bold float-left">Hasil Prediksi</h5> -->
 
                                 <div class="table-responsive mt-4">
                                     <table class="table table-bordered table-hover table-striped" id="dataTable"
@@ -227,12 +117,11 @@ $bulan = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agust
                                             <tr>
                                                 <th class="text-center " width="50">No</th>
                                                 <th class="text-center" width="150">Bulan (x1)</th>
-                                                <th class="text-center">Penjualan Bersih (x2)</th>
+                                                <th class="text-center">Harga Jual (x2)</th>
                                                 <th class="text-center" width="100">Jumlah Terjual (y)</th>
-                                                <th class="text-center" width="100">Ypred</th>
-                                                <th class="text-center">Y - Ypred</th>
-                                                <th class="text-center">Y - Ypred^2</th>
-                                                <th class="text-center">Y - Yrata^2</th>
+                                                <th class="text-center" width="100">Prediksi Jumlah Terjuan(Ypred)</th>
+                                                <th class="text-center">Selisih Prediksi (YYpred)</th>
+                                                <th class="text-center">Keterangan</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -246,60 +135,23 @@ $bulan = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agust
                                                 <td class="text-center"><?= $data['jumlah_terjual'] ?></td>
                                                 <td class="text-center"><?= $data['Ypred'] ?></td>
                                                 <td class="text-center"><?= $data['YYpred'] ?></td>
-                                                <td class="text-center"><?= $data['YYpred2'] ?></td>
-                                                <td class="text-center"><?= $data['YYrata2'] ?></td>
+                                                <td class="text-center">
+                                                    <?php if ($data['YYpred'] > 0): ?>
+                                                    <span class="badge badge-danger">
+                                                        Lebih besar produk jual realnya
+                                                    </span>
+                                                    <?php elseif ($data['YYpred'] < 0): ?>
+                                                    <span class="badge badge-success">Lebih besar produk jual yang
+                                                        diprediksikan</span>
+                                                    <?php else: ?>
+                                                    <span class="badge badge-secondary">Stabil</span>
+                                                    <?php endif; ?>
+                                                </td>
                                             </tr>
                                             <?php endforeach; ?>
 
                                         </tbody>
-                                        <tfoot>
-                                            <tr>
-                                                <th class="text-center" colspan="2">
-                                                    <!-- gambar sigma -->
-                                                    Σ (Jumlah) : <?= count($data_pengujian) ?>
-                                                </th>
-                                                <th class="text-center">Rp. <?= number_format($jumlahX2, 0, ',', '.') ?>
-                                                </th>
-                                                <th class="text-center"><?= $jumlahY ?></th>
-                                                <th class="text-center"><?= $jumlahYpred ?></th>
-                                                <th class="text-center"><?= $jumlahYYpred ?></th>
-                                                <th class="text-center"><?= $jumlahYYpred2 ?></th>
-                                                <th class="text-center"><?= $jumlahYYrata2 ?></th>
-                                            </tr>
-                                            <tr>
-                                                <th class="text-center" colspan="4">MAE = Σ|Y - Ypred| / n</th>
-                                                <th class="text-center" colspan="4"><?= $mae ?></th>
-                                            </tr>
-                                            <tr>
-                                                <th class="text-center" colspan="4">MSE = Σ(Y - Ypred)^2 / n</th>
-                                                <th class="text-center" colspan="4"><?= $mse ?></th>
-                                            </tr>
-                                            <tr>
-                                                <th class="text-center" colspan="4">RMSE = √MSE</th>
-                                                <th class="text-center" colspan="4"><?= $rmse ?></th>
-                                            </tr>
-                                            <tr>
-                                                <th class="text-center" colspan="4">R^2 = 1 - Σ(Y - Ypred)^2 / Σ(Y -
-                                                    Yrata)^2</th>
-                                                <th class="text-center" colspan="4"><?= $r2 ?></th>
-                                            </tr>
-                                            <tr>
-                                                <th class="text-center" colspan="4">R Adjusment = 1 - ((1 - R^2) * (n -
-                                                    1) / (n - k -1))
-                                                </th>
-                                                <th class="text-center" colspan="4"><?= $r_adjusment ?></th>
-                                            </tr>
-                                            <tr>
-                                                <th class="text-center" colspan="4">Uji F = (R^2 / k) / ((1 - R^2)
-                                                    / (n - K -1))</th>
-                                                <th class="text-center" colspan="4"><?= $uji_f ?></th>
-                                            </tr>
-                                            <tr>
-                                                <th class="text-center" colspan="4">MAPE = (ΣYpred / ΣY) * 100</th>
-                                                <th class="text-center" colspan="4"><?= $mape ?> %</th>
-                                            </tr>
 
-                                        </tfoot>
 
 
                                     </table>

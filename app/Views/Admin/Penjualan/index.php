@@ -57,7 +57,7 @@
                                 <th>Tgl Penjualan</th>
                                 <th>Nama Barang</th>
                                 <th>Qty Barang</th>
-                                <th>Penjualan Bersih</th>
+                                <th>Harga Jual</th>
                                 <th>Aksi</th>
                             </tr>
                         </thead>
