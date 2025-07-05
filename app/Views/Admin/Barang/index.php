@@ -59,12 +59,41 @@ ini_set('memory_limit', '256M');
                                     <a haref="#" class="btn btn-warning btn-sm" data-toggle="modal"
                                         data-target="#edit<?= $value['id_barang']; ?>"> <i class="fas fa-edit"></i>
                                         Edit</a>
-                                    <a href="<?= base_url('Barang/hapus/' . $value['id_barang']); ?>"
-                                        class="btn btn-danger btn-sm"
-                                        onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?')"> <i
-                                            class="fas fa-trash"></i> Hapus</a>
+                                    <a class="btn btn-danger btn-sm" data-toggle="modal"
+                                        data-target="#hapus<?= $value['id_barang']; ?>"> <i class="fas fa-trash"></i>
+                                        Hapus</a>
                                 </td>
                             </tr>
+                            <!-- modal hapus -->
+                            <div class="modal fade" id="hapus<?= $value['id_barang']; ?>" tabindex="-1" role="dialog"
+                                aria-labelledby="editModalLabel" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <form action="<?= base_url('Barang/hapus'); ?>" method="post">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="editModalLabel">Hapus Data Barang</h5>
+                                                <button type="button" class="close" data-dismiss="modal"
+                                                    aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body p-4">
+                                                <input type="hidden" name="id_barang"
+                                                    value="<?= $value['id_barang']; ?>">
+                                                <p>Apakah Anda yakin ingin menghapus data barang
+                                                    <strong><?= $value['nama_barang']; ?></strong> ?
+                                                </p>
+                                            </div>
+
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary"
+                                                    data-dismiss="modal">Tutup</button>
+                                                <button type="submit" class="btn btn-danger">Hapus</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
                             <?php } ?>
                         </tbody>
                     </table>

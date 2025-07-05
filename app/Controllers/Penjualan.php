@@ -31,7 +31,7 @@ class Penjualan extends BaseController
             ->add('action', function ($row) {
                 return '
                     <a href="#" class="btn btn-warning btn-sm btn_edit" data-toggle="modal" data-id="' . $row->id_penjualan . '"> <i class="fas fa-edit"></i> Edit</a>
-                    <a href="' . base_url('Penjualan/hapus/' . $row->id_penjualan) . '" class="btn btn-danger btn-sm" onclick="return confirm(\'Apakah Anda yakin ingin menghapus data ini?\')"> <i class="fas fa-trash"></i> Hapus</a>
+                    <a href="#" class="btn btn-danger btn-sm btn_hapus" data-toggle="modal" data-id="' . $row->id_penjualan . '"> <i class="fas fa-trash"></i> Hapus</a>
                 ';
             }, 'last')
             ->toJson(true);
@@ -223,9 +223,15 @@ class Penjualan extends BaseController
         ]);
     }
     
-    public function hapus($id) // hapus data Penjualan
+    public function hapus() // hapus data Penjualan
     {
         $model = new penjualanModel(); // panggil model Penjualan
+        $id = $this->request->getPost('id_penjualan'); // ambil id Penjualan dari post
+        $data = $model->find($id); // cari data Penjualan berdasarkan id
+        if (!$data) { // jika data tidak ditemukan
+            session()->setFlashdata('error', 'Data Tidak Ditemukan'); // set flashdata error
+            return redirect()->to('/Penjualan'); // redirect ke halaman Penjualan
+        }
         $model->delete($id); // hapus data Penjualan
         session()->setFlashdata('success', 'Data Berhasil Dihapus'); // set flashdata
         return redirect()->to('/Penjualan'); // redirect ke halaman Penjualan

@@ -357,6 +357,32 @@
         </div>
     </div>
 </div>
+
+<!-- modal hapus -->
+<div class="modal fade" id="hapus" role="dialog" aria-labelledby="hapusModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <form action="<?= base_url('Penjualan/hapus'); ?>" method="post">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="hapusModalLabel">Hapus Data Penjualan</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body p-4">
+                    <input type="hidden" name="id_penjualan" value="">
+                    <p>Apakah anda yakin ingin menghapus data penjualan ini?</p>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+                    <button type="submit" class="btn btn-danger">Hapus</button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
 <?= $this->endSection('kontent'); ?>
 <?= $this->section('script'); ?>
 <script type="text/javascript">
@@ -544,6 +570,14 @@ $('#edit').on('shown.bs.modal', function() {
         placeholder: 'Pilih',
         allowClear: true
     });
+});
+
+// hapus data
+$('#table_data_penjualan').on('click', '.btn_hapus', function() {
+    // alert('hapus');
+    var id_penjualan = $(this).attr('data-id');
+    $('#hapus input[name="id_penjualan"]').val(id_penjualan);
+    $('#hapus').modal('show');
 });
 
 // set time out alert

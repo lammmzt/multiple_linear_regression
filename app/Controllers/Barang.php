@@ -162,9 +162,15 @@ class Barang extends BaseController
         ]);
     }
     
-    public function hapus($id) // hapus data barang
+    public function hapus() // hapus data barang
     {
         $model = new barangModel(); // panggil model barang
+        $id = $this->request->getPost('id_barang'); // ambil id barang dari post
+        $data = $model->find($id); // cari data barang berdasarkan id
+        if (!$data) { // jika data tidak ditemukan
+            session()->setFlashdata('error', 'Data Tidak Ditemukan'); // set flashdata error
+            return redirect()->to('/Barang'); // redirect ke halaman barang
+        }
         $model->delete($id); // hapus data barang
         session()->setFlashdata('success', 'Data Berhasil Dihapus'); // set flashdata
         return redirect()->to('/Barang'); // redirect ke halaman barang

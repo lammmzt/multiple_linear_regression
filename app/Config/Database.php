@@ -35,6 +35,7 @@ class Database extends Config
         'username'     => 'analisis-barang',
         'password'     => 'analisis-barang321',
         'database'     => 'analisis_barang',
+        
         'DBDriver'     => 'MySQLi',
         'DBPrefix'     => '',
         'pConnect'     => false,
