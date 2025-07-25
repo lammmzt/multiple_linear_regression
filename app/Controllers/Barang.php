@@ -38,6 +38,23 @@ class Barang extends BaseController
     { 
         $model = new barangModel(); // panggil model barang
         $id_barang = 'BRG-'.date('YmdHis').rand(100,9999); // generate id barang
+        $validation = \Config\Services::validation(); // get validation
+
+        $validation->setRules([ // set rules
+            'nama_barang' => [
+                'label' => 'Nama Barang',
+                'rules' => 'required|is_unique[barang.nama_barang]',
+                'errors' => [
+                    'required' => '{field} Harus Diisi',
+                    'is_unique' => '{field} Sudah Ada'
+                ]
+            ]
+        ]);
+
+        if (!$validation->run($this->request->getPost())) { // jika validasi gagal
+            session()->setFlashdata('error', 'Nama Barang Sudah Ada');
+            return redirect()->to('/Barang'); // redirect ke halaman barang
+        }
         $data = [ // set data
             'id_barang' => $id_barang,
             'nama_barang' => $this->request->getPost('nama_barang'),
@@ -52,10 +69,29 @@ class Barang extends BaseController
     {
         $model = new barangModel(); // panggil model barang
         $id = $this->request->getPost('id_barang'); // ambil id barang
+        $validation = \Config\Services::validation(); // get validation
+
+        $validation->setRules([ // set rules
+            'nama_barang' => [
+                'label' => 'Nama Barang',
+                'rules' => 'required|is_unique[barang.nama_barang,id_barang,' . $id . ']',
+                'errors' => [
+                    'required' => '{field} Harus Diisi',
+                    'is_unique' => '{field} Sudah Ada'
+                ]
+            ]
+        ]);
+
+        if (!$validation->run($this->request->getPost())) { // jika validasi gagal
+            session()->setFlashdata('error', 'Nama Barang Sudah Ada');
+            return redirect()->to('/Barang'); // redirect ke halaman barang
+        }
+        
         $data = [ // set data
             'nama_barang' => $this->request->getPost('nama_barang'),
             'updated_at' => date('Y-m-d H:i:s')
         ]; 
+        
         session()->setFlashdata('success', 'Data Berhasil Diubah'); // set flashdata
         $model->update($id, $data); // update data barang
         return redirect()->to('/Barang'); // redirect ke halaman barang
