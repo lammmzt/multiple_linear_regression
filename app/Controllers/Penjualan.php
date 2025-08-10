@@ -179,7 +179,11 @@ class Penjualan extends BaseController
                 continue;
             }
 
-            $id  = 'BRG-'.date('YmdHis').$no.rand(100,999);
+            $id = 'BRG-'.date('Y').'-'.rand(100,999);
+            // check id barang
+            while (array_key_exists($id, $data_nama_barang)) {
+                $id = 'BRG-'.date('Y').'-'.rand(100,999);
+            }
             // simpan data barang
             $modelBarang->insert([
                 'id_barang' => $id,

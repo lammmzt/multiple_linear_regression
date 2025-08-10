@@ -37,7 +37,19 @@ class Barang extends BaseController
     public function simpan() // simpan data users
     { 
         $model = new barangModel(); // panggil model barang
-        $id_barang = 'BRG-'.date('YmdHis').rand(100,9999); // generate id barang
+        $id_barang = 'BRG-'.date('Y').'-'.rand(100,999);
+        // check id barang
+        $barang = $model->where('id_barang', $id_barang)->first();
+        if ($barang) {
+            $id_barang = 'BRG-'.date('Y').'-'.rand(100,999);
+            for ($i = 0; $i < 10; $i++) {
+                $id_barang = 'BRG-'.date('Y').'-'.rand(100,999);
+                $barang = $model->where('id_barang', $id_barang)->first();
+                if (!$barang) {
+                    break;
+                }
+            }
+        }
         $validation = \Config\Services::validation(); // get validation
 
         $validation->setRules([ // set rules
@@ -173,9 +185,13 @@ class Barang extends BaseController
                 ];
                 continue; // skip
             }
-
+            $id_barang = 'BRG-'.date('Y').'-'.rand(100,999);
+            // check id barang
+            while (in_array($id_barang, $data_barang)) {
+                $id_barang = 'BRG-'.date('Y').'-'.rand(100,999);
+            }
             $model->insert([ // insert data barang
-                'id_barang' => 'BRG-'.date('YmdHis').$no.rand(100,999), // generate id barang
+                'id_barang' => $id_barang,
                 'nama_barang' => $nama_barang, // set nama barang
                 'created_at' => date('Y-m-d H:i:s') // set created at
             ]);

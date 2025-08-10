@@ -151,7 +151,65 @@ $bulan = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agust
                                             <?php endforeach; ?>
 
                                         </tbody>
+                                        <tfoot>
+                                            <tr>
+                                                <th class="text-center" colspan="2">
+                                                    <!-- gambar sigma -->
+                                                    Σ (Jumlah) : <?= count($data_pengujian) ?>
+                                                </th>
+                                                <th class="text-center">Rp. <?= number_format($jumlahX2, 0, ',', '.') ?>
+                                                </th>
+                                                <th class="text-center"><?= $jumlahY ?></th>
+                                                <th class="text-center"><?= $jumlahYpred ?></th>
+                                                <th class="text-center"><?= $jumlahYYpred ?></th>
+                                                <th class="text-center">
+                                                    <?php if ($jumlahYYpred > 0): ?>
+                                                    <span class="badge badge-danger">
+                                                        Lebih besar produk jual realnya
+                                                    </span>
+                                                    <?php elseif ($jumlahYYpred < 0): ?>
+                                                    <span class="badge badge-success">Lebih besar produk jual yang
+                                                        diprediksikan</span>
+                                                    <?php else: ?>
+                                                    <span class="badge badge-secondary">Stabil</span>
+                                                    <?php endif; ?>
+                                                </th>
 
+                                            </tr>
+                                            <tr>
+                                                <th class="text-center" colspan="4">MAE = Σ|Y - Ypred| / n</th>
+                                                <th class="text-center" colspan="4"><?= $mae ?></th>
+                                            </tr>
+                                            <tr>
+                                                <th class="text-center" colspan="4">MSE = Σ(Y - Ypred)^2 / n</th>
+                                                <th class="text-center" colspan="4"><?= $mse ?></th>
+                                            </tr>
+                                            <tr>
+                                                <th class="text-center" colspan="4">RMSE = √MSE</th>
+                                                <th class="text-center" colspan="4"><?= $rmse ?></th>
+                                            </tr>
+                                            <tr>
+                                                <th class="text-center" colspan="4">R^2 = 1 - Σ(Y - Ypred)^2 / Σ(Y -
+                                                    Yrata)^2</th>
+                                                <th class="text-center" colspan="4"><?= $r2 ?></th>
+                                            </tr>
+                                            <tr>
+                                                <th class="text-center" colspan="4">R Adjusment = 1 - ((1 - R^2) * (n -
+                                                    1) / (n - k -1))
+                                                </th>
+                                                <th class="text-center" colspan="4"><?= $r_adjusment ?></th>
+                                            </tr>
+                                            <tr>
+                                                <th class="text-center" colspan="4">Uji F = (R^2 / k) / ((1 - R^2)
+                                                    / (n - K -1))</th>
+                                                <th class="text-center" colspan="4"><?= $uji_f ?></th>
+                                            </tr>
+                                            <tr>
+                                                <th class="text-center" colspan="4">MAPE = (ΣYpred / ΣY) * 100</th>
+                                                <th class="text-center" colspan="4"><?= $mape ?> %</th>
+                                            </tr>
+
+                                        </tfoot>
 
 
                                     </table>

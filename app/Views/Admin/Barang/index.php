@@ -147,7 +147,7 @@ ini_set('memory_limit', '256M');
                 </button>
             </div>
             <div class="modal-body p-4">
-                <h5 class="text-center mb-4 text-black">List data yang gagal import</h5>
+                <!-- <h5 class="text-center mb-4 text-black">List data yang gagal import</h5> -->
 
                 <div class="table-responsive hasil_import_barang">
                     <table class="table table-bordered" width="100%" cellspacing="0">
