@@ -28,24 +28,24 @@ class Home extends BaseController
         }else{
             $year = date('Y'); // get current year
         }
-        $data_penjulan_tahunan = [];
+        $data_penjualan_tahunan = [];
         for ($i = 1; $i <= 12; $i++) {
-            $data_penjulan_tahunan[$i] = $penjualanModel->select('SUM(qty_barang) AS total_penjualan, sUM(penjualan_bersih) AS total_pendapatan')
+            $data_penjualan_tahunan[$i] = $penjualanModel->select('SUM(qty_barang) AS total_penjualan, sUM(penjualan_bersih) AS total_pendapatan')
                 ->where('YEAR(tgl_penjualan)', $year)
                 ->where('MONTH(tgl_penjualan)', $i)
                 ->first();
-            if ($data_penjulan_tahunan[$i]['total_penjualan'] == null) {
-                $data_penjulan_tahunan[$i]['total_penjualan'] = 0;
+            if ($data_penjualan_tahunan[$i]['total_penjualan'] == null) {
+                $data_penjualan_tahunan[$i]['total_penjualan'] = 0;
             }
-            if ($data_penjulan_tahunan[$i]['total_pendapatan'] == null) {
-                $data_penjulan_tahunan[$i]['total_pendapatan'] = 0;
+            if ($data_penjualan_tahunan[$i]['total_pendapatan'] == null) {
+                $data_penjualan_tahunan[$i]['total_pendapatan'] = 0;
             }
 
-            $data_penjulan_tahunan[$i]['total_pendapatan'] = $data_penjulan_tahunan[$i]['total_pendapatan'];
-            $data_penjulan_tahunan[$i]['total_penjualan'] = $data_penjulan_tahunan[$i]['total_penjualan'];
+            $data_penjualan_tahunan[$i]['total_pendapatan'] = $data_penjualan_tahunan[$i]['total_pendapatan'];
+            $data_penjualan_tahunan[$i]['total_penjualan'] = $data_penjualan_tahunan[$i]['total_penjualan'];
         }
-        // dd($data_penjulan_tahunan);
-        $data['data_penjulan_tahunan'] = $data_penjulan_tahunan;
+        // dd($data_penjualan_tahunan);
+        $data['data_penjualan_tahunan'] = $data_penjualan_tahunan;
         $data['tahun'] = $year; // set year
         $data['title'] = 'Dashboard';
         $data['active'] = 'Dashboard';

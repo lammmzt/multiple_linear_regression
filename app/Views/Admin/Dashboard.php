@@ -114,7 +114,7 @@
                             <canvas id="penjualan"></canvas>
                         </div>
                         <div class="mt-3">
-                            <p class="text-center">Grafik Penjualan</p>
+                            <p class="text-center">Grafik penjualan</p>
                         </div>
                     </div>
                     <div class="col-xl-6 col-lg-6">
@@ -154,7 +154,7 @@ var myLineChart = new Chart(ctx, {
             pointBorderWidth: 2,
             data: [
                 <?php
-                foreach ($data_Penjualan_tahunan as $key => $value) {
+                foreach ($data_penjualan_tahunan as $key => $value) {
                     echo '"' . $value['total_pendapatan'] . '",';
                 }
                 ?>
@@ -249,7 +249,7 @@ var myLineChart2 = new Chart(ctx2, {
             pointBorderWidth: 2,
             data: [
                 <?php
-                foreach ($data_Penjualan_tahunan as $key => $value) {
+                foreach ($data_penjualan_tahunan as $key => $value) {
                     echo '"' . $value['total_penjualan'] . '",';
                 }
                 ?>
