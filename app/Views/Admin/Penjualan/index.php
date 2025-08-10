@@ -290,9 +290,9 @@
                             placeholder="Masukkan Qty Barang">
                     </div>
                     <div class="form-group mt-2">
-                        <label for="penjualan_bersih">Penjualan Bersih <span class="text-danger">*</span></label>
+                        <label for="penjualan_bersih">Harga Jual <span class="text-danger">*</span></label>
                         <input type="number" name="penjualan_bersih" id="penjualan_bersih" class="form-control" required
-                            placeholder="Masukkan Penjualan Bersih">
+                            placeholder="Masukkan Harga Jual">
                     </div>
                 </div>
 
@@ -342,9 +342,9 @@
                     </div>
 
                     <div class="form-group mt-2">
-                        <label for="penjualan_bersih">Penjualan Bersih <span class="text-danger">*</span></label>
+                        <label for="penjualan_bersih">Harga jual <span class="text-danger">*</span></label>
                         <input type="number" name="penjualan_bersih" id="penjualan_bersih" class="form-control" value=""
-                            required placeholder="Masukkan Penjualan Bersih">
+                            required placeholder="Masukkan Harga Jual">
                     </div>
                 </div>
 
